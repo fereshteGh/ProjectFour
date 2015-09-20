@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="../myStyle.css" rel="stylesheet">
+</head>
+<body dir="rtl">
+<form action="addLegalCustomer.html" method="post">
+    <input type="submit" class="button" name="addButton" value="اضافه کردن مشتری">
+</form>
+<br>
+<form action="searchLegalCustomer.html" method="post">
+    <input type="submit" class="button" name="searchButton" value="جستجوی  مشتری">
+</form>
+</body>
+</html>
