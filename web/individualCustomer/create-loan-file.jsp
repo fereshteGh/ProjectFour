@@ -25,9 +25,7 @@ if("firstLoad".equals(request.getAttribute("loadTimes"))==false) {
 <form action="/retrieveCustomer" method="post">
     Customer number:
     <input type="text" class="text" name="customerNumber">
-    <%--<input type="button"  onclick="myFun()" value="Retrieve"/>--%>
     <input type="submit" class="button" name="retrieve" value="retrieve"  onclick="myFun()" style="width: 200px">
-    <%--<input type="hidden" name="operation" value="retrieve">--%>
     <br><br>
     <table name="myTable" style="margin-left: 10px">
         <tr>
