@@ -9,7 +9,7 @@ public class GrantCondition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = " grantId")
-    private String grantId;
+    private int grantId;
     @Column(name = " grantConditionName")
     private String grantConditionName;
     @Column(name = " maxContractDuration")
@@ -24,7 +24,7 @@ public class GrantCondition {
     public GrantCondition() {
     }
 
-    public String getGrantId() {
+    public int getGrantId() {
         return grantId;
     }
 
@@ -48,7 +48,7 @@ public class GrantCondition {
         return minContractAmount;
     }
 
-    public void setGrantId(String grantId) {
+    public void setGrantId(int grantId) {
         this.grantId = grantId;
     }
 

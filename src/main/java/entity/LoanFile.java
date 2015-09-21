@@ -4,28 +4,30 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "loanFile" )
+@Table(name = "loanFile")
 public class LoanFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fileId")
     private int id;
-    @Column( name = "contractDuration")
+    @Column(name = "contractDuration")
     private int contractDuration;
-    @Column( name = "contractValue")
+    @Column(name = "contractValue")
     private BigDecimal contractValue;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "loanTypeId")
-    private LoanType loanTypeEntities;
+    @JoinColumn(name = "loanTypeId")
+    private LoanType loanType;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId")
-    private IndividualCustomer individualCustomerEntities;
+    private IndividualCustomer individualCustomer;
 
     public LoanFile() {
     }
+
     public int getId() {
         return id;
     }
+
     public int getContractDuration() {
         return contractDuration;
     }
@@ -34,25 +36,25 @@ public class LoanFile {
         return contractValue;
     }
 
-    public LoanType getLoanTypeEntities() {
-        return loanTypeEntities;
+    public LoanType getLoanType() {
+        return loanType;
     }
 
-    public void setLoanTypeEntities(LoanType loanTypeEntities) {
-        this.loanTypeEntities = loanTypeEntities;
+    public void setLoanType(LoanType loanType) {
+        this.loanType = loanType;
     }
 
-    public IndividualCustomer getIndividualCustomerEntities() {
-        return individualCustomerEntities;
+    public IndividualCustomer getIndividualCustomer() {
+        return individualCustomer;
     }
 
-    public void setIndividualCustomerEntities(IndividualCustomer individualCustomerEntities) {
-        this.individualCustomerEntities = individualCustomerEntities;    }
+    public void setIndividualCustomer(IndividualCustomer individualCustomer) {
+        this.individualCustomer = individualCustomer;
+    }
 
     public void setId(int id) {
         this.id = id;
     }
-
 
     public void setContractDuration(int contractDuration) {
         this.contractDuration = contractDuration;

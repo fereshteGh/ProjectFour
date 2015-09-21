@@ -4,7 +4,7 @@ import crud.CustomerCRUD;
 
 public class CustomerLogic {
     static final Boolean lock = true;
-    //generate customer number
+
     public static String generateCustomerNumber() {
         String customerNumber;
         synchronized (lock) {

@@ -6,7 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "legalCustomer" )
+@Table(name = "legalCustomer")
 @PrimaryKeyJoinColumn(name = "customerId")
 public class LegalCustomer extends Customer {
     @Column(name = " companyName")

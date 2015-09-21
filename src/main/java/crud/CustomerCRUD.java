@@ -6,9 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.apache.log4j.Logger;
 
-
 public class CustomerCRUD {
-static Logger logger = Logger.getLogger(Customer.class);
+    static Logger logger = Logger.getLogger(Customer.class);
+
     public static String readLastCustomerNumber() {
         SessionFactory sessionFactory = HibernateConfiguration.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -23,7 +23,6 @@ static Logger logger = Logger.getLogger(Customer.class);
         } finally {
             session.close();
         }
-
         return lastCustomerNumber;
     }
 }

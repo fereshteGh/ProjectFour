@@ -26,14 +26,14 @@
         <td>Minimum Contract Amount</td>
         <td>Maximum Contract Amount</td>
     </tr>
-    <%LoanType loanTypeEntities =(LoanType) request.getAttribute("loanType");%>
-    <%for(GrantCondition grantConditionEntities:loanTypeEntities.getGrantConditionList()){%>
+    <%LoanType loanType =(LoanType) request.getAttribute("loanType");%>
+    <%for(GrantCondition grantCondition: loanType.getGrantConditionList()){%>
     <tr>
-        <td> <%=grantConditionEntities.getGrantConditionName()%></td>
-        <td> <%=grantConditionEntities.getMinContractDuration()%></td>
-        <td> <%=grantConditionEntities.getMaxContractDuration()%></td>
-        <td> <%=grantConditionEntities.getMinContractAmount()%></td>
-        <td> <%=grantConditionEntities.getMaxContractAmount()%></td>
+        <td> <%=grantCondition.getGrantConditionName()%></td>
+        <td> <%=grantCondition.getMinContractDuration()%></td>
+        <td> <%=grantCondition.getMaxContractDuration()%></td>
+        <td> <%=grantCondition.getMinContractAmount()%></td>
+        <td> <%=grantCondition.getMaxContractAmount()%></td>
     </tr>
     <%}%>
 </table>

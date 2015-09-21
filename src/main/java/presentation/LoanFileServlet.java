@@ -19,43 +19,52 @@ public class LoanFileServlet extends HttpServlet {
     static Logger logger = Logger.getLogger(LoanFile.class);
     IndividualCustomerLogic individualCustomerLogic = new IndividualCustomerLogic();
     IndividualCustomer individualCustomer;
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String customerNumber;
         String url = "";
         response.setContentType("text/html;UTF-8");
         request.setCharacterEncoding("UTF-8");
         customerNumber = request.getParameter("customerNumber");
-        if (request.getRequestURI().endsWith("/createLoanFile")) {
-            List<LoanType> loanTypeEntitiesList = individualCustomerLogic.retrieveAllLoanTypes();
-            url = "/individualCustomer/create-loan-file.jsp";
-            request.setAttribute("loanType", loanTypeEntitiesList);
-            logger.debug("go to "+url);
-        }
-       else if (request.getRequestURI().endsWith("/registerLoanFile")) {
-            int loanTypeId = Integer.parseInt(request.getParameter("loanTypeId"));
-            int contractDuration = Integer.parseInt(request.getParameter("contractDuration"));
-            BigDecimal contractValue = new BigDecimal(request.getParameter("contractValue"));
-            LoanFile loanFile ;
+        if (request.getRequestURI().endsWith("/retrieveCustomer")) {
             try {
-                loanFile = individualCustomerLogic.saveLoanFile(loanTypeId, contractDuration, contractValue, customerNumber);
-                url = "/individualCustomer/present-loan-information.jsp";
-                request.setAttribute("loanFile", loanFile);
-                logger.debug("go to "+url);
+                List<LoanType> loanTypeEntitiesList = individualCustomerLogic.retrieveAllLoanTypes();
+                request.setAttribute("loanType", loanTypeEntitiesList);
+                request.getSession().setAttribute("customerNumber", customerNumber);
+                individualCustomer = individualCustomerLogic.findCustomer(customerNumber);
+                request.setAttribute("individualCustomer", individualCustomer);
+
+                url = "/individualCustomer/create-loan-file.jsp";
+                logger.debug("go to " + url);
             } catch (ValidationException e) {
-                request.setAttribute("error",e);
-                url="/individualCustomer/present-error.jsp";
+                request.setAttribute("error", e);
+                url = "/individualCustomer/present-error.jsp";
                 e.printStackTrace();
             }
         }
-        else if (request.getRequestURI().endsWith("/retrieveCustomer")) {
+        if (request.getRequestURI().endsWith("/createLoanFile")) {
+
+            List<LoanType> loanTypeEntitiesList = individualCustomerLogic.retrieveAllLoanTypes();
+            request.setAttribute("loanType", loanTypeEntitiesList);
+            String loadTimes = "firstLoad";
+            request.setAttribute("loadTimes", loadTimes);
+            url = "/individualCustomer/create-loan-file.jsp";
+            logger.debug("go to " + url);
+        }
+        if (request.getRequestURI().endsWith("/registerLoanFile")) {
+            int loanTypeId = Integer.parseInt(request.getParameter("loanTypeId"));
+            int contractDuration = Integer.parseInt(request.getParameter("contractDuration"));
+            BigDecimal contractValue = new BigDecimal(request.getParameter("contractValue"));
+            LoanFile loanFile;
             try {
-                individualCustomer = individualCustomerLogic.findCustomer(customerNumber);
-                System.out.println("individualCustomer = " + individualCustomer);
-                request.setAttribute("individualCustomer", individualCustomer);
-                url = "/individualCustomer/create-loan-file.jsp";
+                System.out.println("customerNumber : "+request.getSession().getAttribute("customerNumber").toString());
+                loanFile = individualCustomerLogic.saveLoanFile(loanTypeId, contractDuration, contractValue, request.getSession().getAttribute("customerNumber").toString());
+                request.setAttribute("loanFile", loanFile);
+                url = "/individualCustomer/present-loan-information.jsp";
+                logger.debug("go to " + url);
             } catch (ValidationException e) {
-                request.setAttribute("error",e);
-                url="/individualCustomer/present-error.jsp";
+                request.setAttribute("error", e);
+                url = "/individualCustomer/present-error.jsp";
                 e.printStackTrace();
             }
         }

@@ -3,76 +3,60 @@
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
+<%
+    String firstName="";
+    String lastName="";
+if("firstLoad".equals(request.getAttribute("loadTimes"))==false) {
+    firstName = ((IndividualCustomer) request.getAttribute("individualCustomer")).getFirstName();
+    lastName = ((IndividualCustomer) request.getAttribute("individualCustomer")).getLastName();
+}
+%>
 <script>
-    function changeActionForm(){
-        document.forms[0].action="/retrieveCustomer"
+    function myFun() {
         document.forms[0].submit();
     }
 </script>
-<%--<script>--%>
-    <%--function myFun() {--%>
-        <%--var myTable = document.getElementsByName("myTable")[0];--%>
-        <%--<%IndividualCustomer individualCustomer = (IndividualCustomer)request.getAttribute("individualCustomer");%>--%>
-        <%--<%if(individualCustomer != null){ %>--%>
-        <%--var firstName =--%>
-        <%--<%= individualCustomer.getFirstName()%>--%>
-        <%--var lastName =--%>
-        <%--<%= individualCustomer.getLastName()%>--%>
-        <%--<%}%>--%>
-        <%--var rowCount = myTable.rows.length;--%>
-        <%--var row = myTable.insertRow(rowCount);--%>
-        <%--var cell1 = row.insertCell(0);--%>
-        <%--var cell2 = row.insertCell(1);--%>
-        <%--cell1.innerHTML = '<input type="text" name="firstName " value="' + firstName + '">';--%>
-        <%--cell2.innerHTML = '<input type="text" name="lastName " value="' + lastName + '">';--%>
-        <%--firstName = "";--%>
-        <%--lastName = "";--%>
-    <%--}--%>
-<%--</script>--%>
 <head lang="en">
     <meta charset="UTF-8">
     <link href="../myStyle.css" rel="stylesheet">
-    <meta charset="UTF-8">
     <title>createLoanFile</title>
 </head>
 <body>
-<form action="/registerLoanFile" method="post">
+<form action="/retrieveCustomer" method="post">
     Customer number:
     <input type="text" class="text" name="customerNumber">
-    <input type="submit" class="button" name="retrieve" value="retrieve"  onclick="changeActionForm()" style="width: 200px">
-    <input type="hidden" name="operation" value="retrieve">
+    <%--<input type="button"  onclick="myFun()" value="Retrieve"/>--%>
+    <input type="submit" class="button" name="retrieve" value="retrieve"  onclick="myFun()" style="width: 200px">
+    <%--<input type="hidden" name="operation" value="retrieve">--%>
     <br><br>
     <table name="myTable" style="margin-left: 10px">
         <tr>
-            <th>first name</th>
+            <th id="test">first name</th>
             <th>last name</th>
         </tr>
-        <%IndividualCustomer individualCustomer = (IndividualCustomer) request.getSession().getAttribute("individualCustomer"); %>
-        <tr>
-            <%if(individualCustomer != null){ %>
-            <td><%=individualCustomer.getFirstName().toString()%>
-            </td>
-            <td><%=individualCustomer.getLastName().toString()%>
-            </td>
-            <%}%>
-        </tr>
+      <td><%=firstName%>
+        </td>
+        <td><%=lastName%>
+        </td>
+
     </table>
     <br><br>
-    </form>
-
+</form>
+<form action="/registerLoanFile" method="post">
     <select name="loanTypeId">
-                <%for (LoanType loanType : (List<LoanType>) request.getAttribute("loanType")) {%>
-        <%if(loanType != null){%>
+        <%for (LoanType loanType : (List<LoanType>) request.getAttribute("loanType")) {%>
+        <%if (loanType != null) {%>
         <option value="<%=loanType.getLoanTypeId()%>"><%=loanType.getLoanTypeName()%>
         </option>
         <%}%>
         <%}%>
     </select>
     <label> Duration of Contract : </label>
-    <input type="text" name="durationOfContract">
+    <input type="text" name="contractDuration">
     <label> Amount of Contract : </label>
-    <input type="text" name="amountOfContract">
+    <input type="text" name="contractValue">
     <input type="submit" class="button" name="create" value="create" style="width: 200px">
+</form>
 
 </body>
 </html>

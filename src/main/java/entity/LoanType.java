@@ -9,19 +9,19 @@ public class LoanType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = " loanTypeId")
-    private String loanTypeId;
+    private int loanTypeId;
     @Column(name = " loanTypeName")
     private String loanTypeName;
     @Column(name = " interestRate")
     private double interestRate;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JoinColumn(name = "loanTypeId")
     private List<GrantCondition> grantConditionList;
 
     public LoanType() {
     }
 
-    public String getLoanTypeId() {
+    public int getLoanTypeId() {
         return loanTypeId;
     }
 
@@ -37,7 +37,7 @@ public class LoanType {
         return grantConditionList;
     }
 
-    public void setLoanTypeId(String loanTypeId) {
+    public void setLoanTypeId(int loanTypeId) {
         this.loanTypeId = loanTypeId;
     }
 

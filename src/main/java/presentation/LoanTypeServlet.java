@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class LoanTypeServlet extends HttpServlet {
     static Logger logger = Logger.getLogger(LoanType.class);
@@ -54,31 +53,12 @@ public class LoanTypeServlet extends HttpServlet {
         } catch (ValidationException e) {
             request.setAttribute("error",e);
             url="/individualCustomer/present-error";
-            presentError(response, e);
         }
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
         requestDispatcher.forward(request, response);
     }
 
-    public void presentError(HttpServletResponse response, Exception e) {
-        try {
-            response.setContentType("text/html;UTF-8");
-            PrintWriter writer = response.getWriter();
-            String htmlResponse;
-            htmlResponse = "<!DOCTYPE html>\n" +
-                    "<html>\n" +
-                    "<head lang=\"en\">\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <link href=\"myStyle.css\"  rel=\"stylesheet\" />\n" +
-                    "</head>" +
-                    "<body > " + e.getMessage() +
-                    "</body>" +
-                    "</html>";
-            writer.println(htmlResponse);
-        } catch (IOException e1) {
-            e.printStackTrace();
-        }
-    }
+
 }
 
 

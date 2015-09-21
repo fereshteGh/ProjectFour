@@ -7,39 +7,20 @@ public class HibernateConfiguration {
     private static SessionFactory sessionFactory = null;
     private static HibernateConfiguration instance = null;
 
-//    private HibernateConfiguration() {
-//        this.sessionFactory = new Configuration().configure().buildSessionFactory();
-//    }
-//
-//    public static SessionFactory getInstance(){
-//        if(instance == null)
-//            instance = new HibernateConfiguration();
-//        return sessionFactory;
-//    }
-      public static HibernateConfiguration getInstance() {
+    public static HibernateConfiguration getInstance() {
         if (instance == null) {
             instance = new HibernateConfiguration();
         }
         return instance;
     }
 
-    private  HibernateConfiguration(){
-
-            this.sessionFactory = new Configuration().configure().buildSessionFactory();
-
+    private HibernateConfiguration() {
+        this.sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
-    public  SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-
-
-
-
-
-
-
-
 
 
 }

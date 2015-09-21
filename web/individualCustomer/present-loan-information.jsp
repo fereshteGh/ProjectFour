@@ -12,19 +12,19 @@
 <ul>
     <li>
         <label>Customer Number :</label>
-        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomerEntities().getCustomerNumber()%>"/>
+        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomer().getCustomerNumber()%>"/>
    </li>
 <li>
 <label>First Name : </label>
- <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomerEntities().getFirstName()%>"/>
+ <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomer().getFirstName()%>"/>
 </li>
     <li>
         <label>Last Name : </label>
-        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomerEntities().getLastName()%>"/>
+        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getIndividualCustomer().getLastName()%>"/>
     </li>
     <li>
         <label>Loan Type Name : </label>
-        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getLoanTypeEntities().getLoanTypeName()%>"/>
+        <input type="text" value="<%=((LoanFile)request.getAttribute("loanFile")).getLoanType().getLoanTypeName()%>"/>
     </li>
 </ul>
 </body>

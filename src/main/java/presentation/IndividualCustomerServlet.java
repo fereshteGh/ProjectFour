@@ -5,14 +5,15 @@ import exceptions.ExistenceException;
 import exceptions.NationalCodeException;
 import exceptions.ValidationException;
 import logic.IndividualCustomerLogic;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class IndividualCustomerServlet extends HttpServlet {
@@ -41,44 +42,44 @@ public class IndividualCustomerServlet extends HttpServlet {
                 individualCustomer = individualCustomerLogic.addCustomer(firstName, lastName, birthDate, nationalCode);
                 request.setAttribute("individualCustomer", individualCustomer);
                 url = "/individualCustomer/present-customer.jsp";
-                logger.debug("go to "+url);
+                logger.debug("go to " + url);
 
             } else if (request.getRequestURL().toString().endsWith("/deleteIndividualCustomer")) {
                 customerId = request.getParameter("customerId");
                 individualCustomerLogic.deleteCustomer(customerId);
                 request.setAttribute("customerNumber", customerId);
                 url = "/individualCustomer/present-delete.jsp";
-                logger.debug("go to "+url);
+                logger.debug("go to " + url);
 
             } else if (request.getRequestURL().toString().endsWith("/editIndividualCustomer")) {
                 customerId = request.getParameter("customerId");
                 individualCustomer = individualCustomerLogic.retrieveCustomer(customerId);
                 request.setAttribute("individualCustomer", individualCustomer);
                 url = "/individualCustomer/present-edit.jsp";
-                logger.debug("go to "+url);
+                logger.debug("go to " + url);
 
             } else if (request.getRequestURL().toString().endsWith("/updateIndividualCustomer")) {
                 customerId = request.getParameter("customerId");
-                individualCustomer = individualCustomerLogic.updateCustomer(firstName, lastName, birthDate, nationalCode,customerId);
+                individualCustomer = individualCustomerLogic.updateCustomer(firstName, lastName, birthDate, nationalCode, customerId);
                 request.setAttribute("individualCustomer", individualCustomer);
                 url = "/individualCustomer/present-update.jsp";
-                logger.debug("go to "+url);
+                logger.debug("go to " + url);
 
             } else if (request.getRequestURL().toString().endsWith("/searchIndividualCustomer")) {
                 individualCustomerList = individualCustomerLogic.searchCustomer(firstName, lastName, birthDate, nationalCode, customerNumber);
                 request.setAttribute("individualCustomer", individualCustomerList);
                 url = "/individualCustomer/present-search.jsp";
-                logger.debug("go to "+url);
+                logger.debug("go to " + url);
             }
         } catch (ValidationException e) {
-            request.setAttribute("error",e);
-            url="/individualCustomer/present-error";
+            request.setAttribute("error", e);
+            url = "/individualCustomer/present-error";
         } catch (ExistenceException e) {
-            request.setAttribute("error",e);
-            url="/individualCustomer/present-error";
+            request.setAttribute("error", e);
+            url = "/individualCustomer/present-error";
         } catch (NationalCodeException e) {
-            request.setAttribute("error",e);
-            url="/individualCustomer/present-error";
+            request.setAttribute("error", e);
+            url = "/individualCustomer/present-error";
         }
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
         requestDispatcher.forward(request, response);

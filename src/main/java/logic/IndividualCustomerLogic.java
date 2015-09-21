@@ -69,16 +69,16 @@ public class IndividualCustomerLogic {
     }
 
     public List searchCustomer(String fName, String lName, String bDate, String nationalCode, String customerNumber) throws ValidationException {
-        List individualCustome;
+        List individualCustomer;
         individualCustomers = new IndividualCustomer();
         individualCustomers.setFirstName(fName);
         individualCustomers.setLastName(lName);
         individualCustomers.setBirthDate(bDate);
         individualCustomers.setNationalCode(nationalCode);
         individualCustomers.setCustomerNumber(customerNumber);
-        individualCustome = IndividualCustomerCrud.searchCustomer(individualCustomers);
+        individualCustomer = IndividualCustomerCrud.searchCustomer(individualCustomers);
         logger.info("Logic : individual customer found successfully!");
-        return individualCustome;
+        return individualCustomer;
     }
 
     public IndividualCustomer retrieveCustomer(String customerId) throws ValidationException {
@@ -151,22 +151,28 @@ public class IndividualCustomerLogic {
         }
     }
     public LoanFile saveLoanFile(int loanTypeId,int contractDuration,BigDecimal contractValue, String customerNumber) throws ValidationException {
-        IndividualCustomer individualCustomerEntities = findCustomer(customerNumber);
-        LoanFile loanFileEntities = new LoanFile();
-        loanFileEntities.setIndividualCustomerEntities(individualCustomerEntities);
-        loanFileEntities.setContractDuration(contractDuration);
-        loanFileEntities.setContractValue(contractValue);
+        IndividualCustomer individualCustomer = findCustomer(customerNumber);
+        LoanFile loanFile = new LoanFile();
+        loanFile.setIndividualCustomer(individualCustomer);
+        loanFile.setContractDuration(contractDuration);
+        loanFile.setContractValue(contractValue);
         LoanType loanType;
         loanType = IndividualCustomerCrud.retrieveLoanType(loanTypeId);
-        loanFileEntities.setLoanTypeEntities(loanType);
-        GrantCondition grantConditionEntities = new GrantCondition();
-        if (contractDuration >= grantConditionEntities.getMaxContractDuration()&& contractDuration<=grantConditionEntities.getMinContractDuration() && contractValue.compareTo(grantConditionEntities.getMaxContractAmount())==1 && contractValue.compareTo(grantConditionEntities.getMinContractAmount())==-1){
+        loanFile.setLoanType(loanType);
+        List<GrantCondition> grantConditionList = loanType.getGrantConditionList();
+        for(GrantCondition grantCondition : grantConditionList)
+        if (contractDuration <= grantCondition.getMaxContractDuration()&&
+                contractDuration >= grantCondition.getMinContractDuration() &&
+                contractValue.compareTo(grantCondition.getMaxContractAmount())== -1 &&
+                contractValue.compareTo(grantCondition.getMinContractAmount())== 1){
+            loanFile.setContractDuration(contractDuration);
+            loanFile.setContractValue(contractValue);
+        }else {
             loggerLoanFile.error("Logic : loan type is invalid");
             throw new ValidationException("invalid entry for loan type "+loanType.getLoanTypeId());
-
         }
         loggerLoanFile.info("Logic : loan file for individual customer created successfully!");
-        return IndividualCustomerCrud.saveLoanFile(loanFileEntities);
+        return IndividualCustomerCrud.saveLoanFile(loanFile);
     }
     public IndividualCustomer findCustomer(String customerNumber) throws ValidationException {
         IndividualCustomer individualCustomer = IndividualCustomerCrud.findCustomer(customerNumber);
