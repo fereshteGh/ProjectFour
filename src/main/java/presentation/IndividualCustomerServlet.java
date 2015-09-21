@@ -73,13 +73,13 @@ public class IndividualCustomerServlet extends HttpServlet {
             }
         } catch (ValidationException e) {
             request.setAttribute("error", e);
-            url = "/individualCustomer/present-error";
+            url = "/individualCustomer/present-error.jsp";
         } catch (ExistenceException e) {
             request.setAttribute("error", e);
-            url = "/individualCustomer/present-error";
+            url = "/individualCustomer/present-error.jsp";
         } catch (NationalCodeException e) {
             request.setAttribute("error", e);
-            url = "/individualCustomer/present-error";
+            url = "/individualCustomer/present-error.jsp";
         }
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
         requestDispatcher.forward(request, response);

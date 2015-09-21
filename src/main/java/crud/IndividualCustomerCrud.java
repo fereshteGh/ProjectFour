@@ -80,7 +80,7 @@ public class IndividualCustomerCrud {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            IndividualCustomer individualCustomer = (IndividualCustomer) session.get(IndividualCustomer.class, customerNumber);
+            IndividualCustomer individualCustomer = (IndividualCustomer) session.get(IndividualCustomer.class, Integer.parseInt(customerNumber));
             session.delete(individualCustomer);
             logger.info("Database : individual customer deleted successfully!");
             session.getTransaction().commit();

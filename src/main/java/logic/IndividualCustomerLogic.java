@@ -58,7 +58,7 @@ public class IndividualCustomerLogic {
         individualCustomers.setBirthDate(bDate);
         individualCustomers.setNationalCode(nationalCode);
         individualCustomers.setCustomerId(Integer.parseInt(customerId));
-        checkFields(individualCustomers);
+        //checkFields(individualCustomers);
         logger.info("Logic : individual customer updated successfully!");
        return IndividualCustomerCrud.updateCustomer(individualCustomers);
     }
